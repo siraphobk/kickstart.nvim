@@ -143,6 +143,17 @@ return {
         -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
         detached = vim.fn.has 'win32' == 0,
       },
+      dap_configurations = {
+        {
+          type = 'go',
+          name = 'Attach to Tilt debug server at 127.0.0.1:19090',
+          request = 'attach',
+          mode = 'remote',
+          host = '127.0.0.1',
+          port = 19090,
+          debugAdapter = 'dlv-dap',
+        },
+      },
     }
   end,
 }
