@@ -1,6 +1,6 @@
 return {
   'zbirenbaum/copilot-cmp',
-  config = function()
-    require('copilot_cmp').setup()
+  config = function(_, opts)
+    require('copilot_cmp').setup(opts)
   end,
 }
