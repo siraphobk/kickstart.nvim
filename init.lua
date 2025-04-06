@@ -174,7 +174,8 @@ vim.opt.wrap = false
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>qs', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix [S]etloclist' })
+vim.keymap.set('n', '<leader>qf', vim.diagnostic.open_float, { noremap = true, silent = true, desc = '[Q]uickfix [F]loat' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -571,6 +572,7 @@ require('lazy').setup({
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+          map('<leader>cr', vim.lsp.buf.rename, '[C]ode [R]ename', { 'n', 'x' })
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
