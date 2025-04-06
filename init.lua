@@ -163,8 +163,8 @@ vim.opt.confirm = true
 
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
-
 vim.opt.colorcolumn = '80'
+vim.opt.wrap = false
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
