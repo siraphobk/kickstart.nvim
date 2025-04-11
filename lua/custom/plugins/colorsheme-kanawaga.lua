@@ -6,7 +6,9 @@ return {
       compile = false, -- enable compiling the colorscheme
       undercurl = true, -- enable undercurls
       commentStyle = { italic = true },
-      functionStyle = {},
+      functionStyle = {
+        bold = true,
+      },
       keywordStyle = { italic = true },
       statementStyle = { bold = true },
       typeStyle = {},
