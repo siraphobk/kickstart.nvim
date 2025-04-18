@@ -175,6 +175,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>qs', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix [S]etloclist' })
+vim.keymap.set('n', '<leader>ql', vim.diagnostic.setqflist, { desc = 'Open diagnostic [Q]uickfix [L]ist' })
 vim.keymap.set('n', '<leader>qf', vim.diagnostic.open_float, { noremap = true, silent = true, desc = '[Q]uickfix [F]loat' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -356,6 +357,7 @@ require('lazy').setup({
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
         { '<leader>e', group = '[E]xplorer', mode = { 'n' } },
+        { '<leader>q', group = '[Q]uickfix', mode = { 'n' } },
       },
     },
   },
