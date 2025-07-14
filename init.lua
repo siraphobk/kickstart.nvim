@@ -806,6 +806,10 @@ require('lazy').setup({
         'L3MON4D3/LuaSnip',
         version = '2.*',
         build = (function()
+          -- NOTE:
+          -- Luasnip Config Doc: https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#config-options
+          --
+          --
           -- Build Step is needed for regex support in snippets.
           -- This step is not supported in many windows environments.
           -- Remove the below condition to re-enable on windows.
@@ -827,7 +831,7 @@ require('lazy').setup({
         },
         opts = {
           history = true,
-          region_check_events = 'InsertEnter',
+          region_check_events = 'CursorMoved',
           delete_check_events = 'TextChanged,InsertLeave',
         },
       },
