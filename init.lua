@@ -831,8 +831,8 @@ require('lazy').setup({
         },
         opts = {
           history = true,
-          region_check_events = 'CursorMoved',
-          delete_check_events = 'TextChanged,InsertLeave',
+          region_check_events = 'CursorMoved,CursorMovedI,InsertLeave',
+          delete_check_events = 'TextChanged,InsertLeave,CursorMoved,CursorMovedI',
         },
       },
       'folke/lazydev.nvim',
@@ -966,6 +966,8 @@ require('lazy').setup({
       statusline.section_location = function()
         return '%2l:%-2v'
       end
+
+      require('mini.animate').setup()
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
