@@ -84,6 +84,19 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+if vim.g.vscode then
+  -- VSCode extension is detected, don't do anything
+  print 'Neovim running in VSCode, skipping kickstart.nvim config. Using VSCode settings instead...'
+
+  vim.o.ignorecase = true
+  vim.o.smartcase = true
+  vim.o.clipboard = 'unnamedplus'
+
+  return
+end
+
+print 'Kickstart.nvim is loading...'
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -181,7 +194,8 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>qs', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix [S]etloclist' })
 vim.keymap.set('n', '<leader>ql', vim.diagnostic.setqflist, { desc = 'Open diagnostic [Q]uickfix [L]ist' })
-vim.keymap.set('n', '<leader>qf', vim.diagnostic.open_float, { noremap = true, silent = true, desc = '[Q]uickfix [F]loat' })
+vim.keymap.set('n', '<leader>qf', vim.diagnostic.open_float,
+  { noremap = true, silent = true, desc = '[Q]uickfix [F]loat' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -310,7 +324,7 @@ require('lazy').setup({
   -- Then, because we use the `opts` key (recommended), the configuration runs
   -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
 
-  { -- Useful plugin to show you pending keybinds.
+  {                     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
@@ -395,7 +409,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -503,7 +517,7 @@ require('lazy').setup({
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',    opts = {} },
 
       -- Allows extra capabilities provided by blink.cmp
       'saghen/blink.cmp',
