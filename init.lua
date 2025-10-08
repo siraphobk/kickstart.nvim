@@ -93,6 +93,17 @@ if vim.g.vscode then
   vim.o.clipboard = 'unnamedplus'
   vim.o.updatetime = 250
 
+  -- Keymaps
+  vim.cmd [[
+    nnoremap <silent> za <Cmd>call VSCodeNotify('editor.toggleFold')<CR>
+    nnoremap <silent> zR <Cmd>call VSCodeNotify('editor.unfoldAll')<CR>
+    nnoremap <silent> zM <Cmd>call VSCodeNotify('editor.foldAll')<CR>
+    nnoremap <silent> zo <Cmd>call VSCodeNotify('editor.unfold')<CR>
+    nnoremap <silent> zO <Cmd>call VSCodeNotify('editor.unfoldRecursively')<CR>
+    nnoremap <silent> zc <Cmd>call VSCodeNotify('editor.fold')<CR>
+    nnoremap <silent> zC <Cmd>call VSCodeNotify('editor.foldRecursively')<CR>
+  ]]
+
   return
 end
 
