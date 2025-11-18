@@ -92,6 +92,7 @@ if vim.g.vscode then
   vim.o.smartcase = true
   vim.o.clipboard = 'unnamedplus'
   vim.o.updatetime = 250
+  vim.g.mapleader = ' '
 
   -- Keymaps
   vim.cmd [[
@@ -102,7 +103,22 @@ if vim.g.vscode then
     nnoremap <silent> zO <Cmd>call VSCodeNotify('editor.unfoldRecursively')<CR>
     nnoremap <silent> zc <Cmd>call VSCodeNotify('editor.fold')<CR>
     nnoremap <silent> zC <Cmd>call VSCodeNotify('editor.foldRecursively')<CR>
+
+    nnoremap <silent> ]d <Cmd>call VSCodeNotify('editor.action.marker.next')<CR>
+    nnoremap <silent> [d <Cmd>call VSCodeNotify('editor.action.marker.prev')<CR>
   ]]
+
+  vim.keymap.set('n', '<leader><space>', function()
+    vim.cmd 'call VSCodeNotify("workbench.action.showAllEditors")'
+  end)
+
+  vim.keymap.set('n', '<leader>e', function()
+    vim.cmd 'call VSCodeNotify("workbench.action.toggleSidebarVisibility")'
+  end)
+
+  vim.keymap.set('n', '<leader>cs', function()
+    vim.cmd 'call VSCodeNotify("workbench.action.toggleAuxiliaryBar")'
+  end)
 
   return
 end
