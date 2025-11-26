@@ -88,6 +88,8 @@ if vim.g.vscode then
   -- VSCode extension is detected, don't do anything
   print 'Neovim running in VSCode, skipping kickstart.nvim config. Using VSCode settings instead...'
 
+  local keyset = vim.keymap.set
+
   vim.o.ignorecase = true
   vim.o.smartcase = true
   vim.o.clipboard = 'unnamedplus'
@@ -96,6 +98,7 @@ if vim.g.vscode then
 
   -- Keymaps
   vim.cmd [[
+
     nnoremap <silent> za <Cmd>call VSCodeNotify('editor.toggleFold')<CR>
     nnoremap <silent> zR <Cmd>call VSCodeNotify('editor.unfoldAll')<CR>
     nnoremap <silent> zM <Cmd>call VSCodeNotify('editor.foldAll')<CR>
@@ -108,17 +111,10 @@ if vim.g.vscode then
     nnoremap <silent> [d <Cmd>call VSCodeNotify('editor.action.marker.prev')<CR>
   ]]
 
-  vim.keymap.set('n', '<leader><space>', function()
-    vim.cmd 'call VSCodeNotify("workbench.action.showAllEditors")'
-  end)
 
-  vim.keymap.set('n', '<leader>e', function()
-    vim.cmd 'call VSCodeNotify("workbench.action.toggleSidebarVisibility")'
-  end)
-
-  vim.keymap.set('n', '<leader>cs', function()
-    vim.cmd 'call VSCodeNotify("workbench.action.toggleAuxiliaryBar")'
-  end)
+  keyset('n', '<leader><space>', function() vim.cmd 'call VSCodeNotify("workbench.action.showAllEditors")' end)
+  keyset('n', '<leader>e', function() vim.cmd 'call VSCodeNotify("workbench.action.toggleSidebarVisibility")' end)
+  keyset('n', '<leader>cs', function() vim.cmd 'call VSCodeNotify("workbench.action.toggleAuxiliaryBar")' end)
 
   return
 end
