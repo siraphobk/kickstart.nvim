@@ -2,6 +2,15 @@ return {
   'loctvl842/monokai-pro.nvim',
   config = function()
     require('monokai-pro').setup {
+      override = function(colors)
+        return {
+          -- Untracked files - using a cyan/teal color as example
+          GitSignsUntracked = { fg = colors.base.cyan },
+          NeoTreeGitUntracked = { fg = colors.base.cyan },
+          -- You can also use hex colors directly:
+          -- GitSignsUntracked = { fg = '#78dce8' },
+        }
+      end,
       transparent_background = false,
       terminal_colors = true,
       devicons = true, -- highlight the icons of `nvim-web-devicons`
