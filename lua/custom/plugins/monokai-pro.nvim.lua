@@ -5,10 +5,10 @@ return {
       override = function(colors)
         return {
           -- Untracked files - using a cyan/teal color as example
-          GitSignsUntracked = { fg = colors.base.cyan },
-          NeoTreeGitUntracked = { fg = colors.base.cyan },
+          -- GitSignsUntracked = { fg = colors.base.cyan },
+          NeoTreeGitUntracked = { fg = '#78dce8' },
           -- You can also use hex colors directly:
-          -- GitSignsUntracked = { fg = '#78dce8' },
+          GitSignsUntracked = { fg = '#78dce8' },
         }
       end,
       transparent_background = false,
