@@ -267,6 +267,10 @@ vim.keymap.set('n', '<C-Right>', '5<C-w>>', { desc = 'Resize window right' })
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
+-- Custom Commands -------------------------------------------------------------
+-- Close other buffers
+vim.api.nvim_create_user_command('CloseOthers', '%bd|e#|bd#', {})
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -653,6 +657,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         gopls = {},
+        buf_ls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         --
@@ -670,10 +675,12 @@ require('lazy').setup({
       --    :Mason
       --
       -- You can press `g?` for help in this menu.
-      local ensure_installed = vim.tbl_keys(servers or {})
+      local ensure_installed = vim.tbl_filter(function(name) return name ~= 'buf_ls' end, vim.tbl_keys(servers or {}))
+
       vim.list_extend(ensure_installed, {
         'lua-language-server', -- Lua Language server
         'stylua', -- Used to format Lua code
+        'buf',
         -- You can add other tools here that you want Mason to install
       })
 
