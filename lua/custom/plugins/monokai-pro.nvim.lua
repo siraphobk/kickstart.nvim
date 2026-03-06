@@ -4,6 +4,13 @@ return {
     require('monokai-pro').setup {
       override = function(colors)
         return {
+          -- Make the focused buffer darker
+          Normal = { bg = colors.base.black },
+          SignColumn = { bg = colors.base.black },
+          LineNr = { bg = colors.base.black },
+          -- Keep inactive buffers at the default theme background
+          NormalNC = { bg = colors.editor.background },
+
           -- Untracked files - using a cyan/teal color as example
           -- GitSignsUntracked = { fg = colors.base.cyan },
           NeoTreeGitUntracked = { fg = '#78dce8' },
