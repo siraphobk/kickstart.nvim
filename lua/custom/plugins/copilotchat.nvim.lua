@@ -7,5 +7,6 @@ return {
     },
     build = 'make tiktoken', -- Only on MacOS or Linux
     opts = {},
+    enabled = false,
   },
 }
