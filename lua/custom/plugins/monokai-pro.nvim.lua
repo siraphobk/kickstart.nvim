@@ -8,14 +8,18 @@ return {
           Normal = { bg = colors.base.black },
           SignColumn = { bg = colors.base.black },
           LineNr = { bg = colors.base.black },
+
           -- Keep inactive buffers at the default theme background
           NormalNC = { bg = colors.editor.background },
 
           -- Untracked files - using a cyan/teal color as example
           -- GitSignsUntracked = { fg = colors.base.cyan },
-          NeoTreeGitUntracked = { fg = '#78dce8' },
+          NeoTreeGitUntracked = { fg = colors.base.cyan },
           -- You can also use hex colors directly:
-          GitSignsUntracked = { fg = '#78dce8' },
+          GitSignsUntracked = { fg = colors.base.cyan },
+
+          -- Make lead/trail listchars more visible
+          Whitespace = { fg = colors.base.dimmed4 },
         }
       end,
       transparent_background = false,
@@ -31,7 +35,7 @@ return {
         annotation = { italic = true },
         tag_attribute = { italic = true }, -- attribute of tag in reactjs
       },
-      filter = 'pro', -- classic | octagon | pro | machine | ristretto | spectrum
+      filter = 'classic', -- classic | octagon | pro | machine | ristretto | spectrum
       -- Enable this will disable filter option
       day_night = {
         enable = false, -- turn off by default
@@ -61,5 +65,7 @@ return {
         },
       },
     }
+
+    vim.cmd [[ colorscheme monokai-pro-classic ]]
   end,
 }
