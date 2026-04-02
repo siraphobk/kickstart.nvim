@@ -716,9 +716,7 @@ require('lazy').setup({
       -- LSP server names (as used by nvim-lspconfig) that should NOT be passed to Mason,
       -- either because Mason doesn't have them or uses a different package name.
       local mason_excluded = { 'buf_ls', 'rust_analyzer' }
-      local ensure_installed = vim.tbl_filter(function(name)
-        return not vim.tbl_contains(mason_excluded, name)
-      end, vim.tbl_keys(servers or {}))
+      local ensure_installed = vim.tbl_filter(function(name) return not vim.tbl_contains(mason_excluded, name) end, vim.tbl_keys(servers or {}))
 
       vim.list_extend(ensure_installed, {
         'lua-language-server', -- Lua Language server
@@ -1016,12 +1014,12 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommended keymaps
+  require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommended keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
