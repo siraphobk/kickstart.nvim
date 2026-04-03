@@ -279,17 +279,16 @@ vim.api.nvim_create_user_command(
   { desc = 'Print current buffer absolute path' }
 )
 
--- List all custom user commands and their descriptions
+-- List all custom user commands
 vim.api.nvim_create_user_command('ListCommands', function()
   local cmds = vim.api.nvim_get_commands { builtin = false }
-  local lines = {}
-  for name, info in pairs(cmds) do
-    local desc = (info.desc ~= '' and info.desc) or '(no description)'
-    table.insert(lines, string.format('%-20s %s', name, desc))
+  local names = {}
+  for name in pairs(cmds) do
+    table.insert(names, name)
   end
-  table.sort(lines)
-  vim.notify(table.concat(lines, '\n'), vim.log.levels.INFO)
-end, { desc = 'List all custom user commands and their descriptions' })
+  table.sort(names)
+  vim.notify(table.concat(names, '\n'), vim.log.levels.INFO)
+end, { desc = 'List all custom user commands' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
