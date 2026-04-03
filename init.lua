@@ -268,8 +268,28 @@ vim.keymap.set('n', '<C-Right>', '5<C-w>>', { desc = 'Resize window right' })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
 -- Custom Commands -------------------------------------------------------------
+
 -- Close other buffers
 vim.api.nvim_create_user_command('CloseOthers', '%bd|e#|bd#', {})
+
+-- Print absolute path of current buffer
+vim.api.nvim_create_user_command(
+  'PrintPath',
+  function() vim.notify(vim.fn.expand '%:p', vim.log.levels.INFO) end,
+  { desc = 'Print current buffer absolute path' }
+)
+
+-- List all custom user commands and their descriptions
+vim.api.nvim_create_user_command('ListCommands', function()
+  local cmds = vim.api.nvim_get_commands { builtin = false }
+  local lines = {}
+  for name, info in pairs(cmds) do
+    local desc = (info.desc ~= '' and info.desc) or '(no description)'
+    table.insert(lines, string.format('%-20s %s', name, desc))
+  end
+  table.sort(lines)
+  vim.notify(table.concat(lines, '\n'), vim.log.levels.INFO)
+end, { desc = 'List all custom user commands and their descriptions' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
