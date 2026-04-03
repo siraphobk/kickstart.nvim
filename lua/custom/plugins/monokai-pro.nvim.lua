@@ -11,15 +11,6 @@ return {
 
           -- Keep inactive buffers at the default theme background
           NormalNC = { bg = colors.editor.background },
-
-          -- Untracked files - using a cyan/teal color as example
-          -- GitSignsUntracked = { fg = colors.base.cyan },
-          NeoTreeGitUntracked = { fg = colors.base.cyan },
-          -- You can also use hex colors directly:
-          GitSignsUntracked = { fg = colors.base.cyan },
-
-          -- Make lead/trail listchars more visible
-          Whitespace = { fg = colors.base.dimmed4 },
         }
       end,
       transparent_background = false,
@@ -67,5 +58,27 @@ return {
     }
 
     vim.cmd [[ colorscheme monokai-pro-classic ]]
+
+    -- Plugin-defined highlights (gitsigns, neo-tree, etc.) can be initialised
+    -- after the colorscheme loads, overwriting our overrides.  Re-apply them
+    -- from both ColorScheme (handles :colorscheme reloads) and VimEnter (runs
+    -- once after every startup plugin has finished initialising).
+    local function apply_custom_highlights()
+      local ok, scheme = pcall(function() return require('monokai-pro').get_scheme() end)
+      if not ok or not scheme then return end
+
+      vim.api.nvim_set_hl(0, 'GitSignsUntracked', { fg = scheme.base.cyan })
+      vim.api.nvim_set_hl(0, 'NeoTreeGitUntracked', { fg = scheme.base.cyan })
+      vim.api.nvim_set_hl(0, 'Whitespace', { fg = scheme.base.dimmed4 })
+    end
+
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      pattern = 'monokai-pro*',
+      callback = function() vim.schedule(apply_custom_highlights) end,
+    })
+
+    vim.api.nvim_create_autocmd('VimEnter', {
+      callback = function() vim.schedule(apply_custom_highlights) end,
+    })
   end,
 }
