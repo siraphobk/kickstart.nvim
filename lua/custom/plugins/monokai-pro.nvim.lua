@@ -1,5 +1,6 @@
 return {
   'loctvl842/monokai-pro.nvim',
+  priority = 1000, -- load colorscheme before other plugins
   config = function()
     require('monokai-pro').setup {
       override = function(colors)
@@ -57,14 +58,13 @@ return {
       },
     }
 
-    vim.cmd [[ colorscheme monokai-pro-classic ]]
-
     -- Plugin-defined highlights (gitsigns, neo-tree, etc.) can be initialised
     -- after the colorscheme loads, overwriting our overrides.  Re-apply them
-    -- from both ColorScheme (handles :colorscheme reloads) and VimEnter (runs
-    -- once after every startup plugin has finished initialising).
+    -- every time the monokai-pro colorscheme is (re)loaded.
+    -- Register the autocmd BEFORE the colorscheme command so the first
+    -- ColorScheme event is caught.
     local function apply_custom_highlights()
-      local ok, scheme = pcall(function() return require('monokai-pro').get_scheme() end)
+      local ok, scheme = pcall(require('monokai-pro').get_scheme)
       if not ok or not scheme then return end
 
       vim.api.nvim_set_hl(0, 'GitSignsUntracked', { fg = scheme.base.cyan })
@@ -77,8 +77,6 @@ return {
       callback = function() vim.schedule(apply_custom_highlights) end,
     })
 
-    vim.api.nvim_create_autocmd('VimEnter', {
-      callback = function() vim.schedule(apply_custom_highlights) end,
-    })
+    vim.cmd [[ colorscheme monokai-pro-classic ]]
   end,
 }
