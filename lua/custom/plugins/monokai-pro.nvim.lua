@@ -76,7 +76,5 @@ return {
       pattern = 'monokai-pro*',
       callback = function() vim.schedule(apply_custom_highlights) end,
     })
-
-    vim.cmd [[ colorscheme monokai-pro-classic ]]
   end,
 }
