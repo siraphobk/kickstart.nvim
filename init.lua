@@ -265,7 +265,23 @@ vim.keymap.set('n', '<C-Right>', '5<C-w>>', { desc = 'Resize window right' })
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
--- Custom Commands -------------------------------------------------------------
+-- User Custom Keybindings -----------------------------------------------------
+
+-- Yank path:range e.g. "/home/siraphob/.config/nvim/init.lua:271-280"
+vim.keymap.set('x', '<leader>yp', function()
+  local path = vim.fn.expand '%:p'
+  local l1 = vim.fn.line 'v' -- visual anchor (live)
+  local l2 = vim.fn.line '.' -- cursor (live)
+  local start = math.min(l1, l2)
+  local finish = math.max(l1, l2)
+  local result = path .. ':' .. start .. '-' .. finish
+  vim.fn.setreg('+', result)
+  vim.cmd 'normal! \27'
+
+  print('Yank path:range =', result)
+end, { desc = 'Yank path:range' })
+
+-- User Custom Commands --------------------------------------------------------
 
 -- Close other buffers
 vim.api.nvim_create_user_command('CloseOthers', '%bd|e#|bd#', {})
