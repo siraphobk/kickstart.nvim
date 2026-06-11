@@ -92,7 +92,6 @@ if vim.g.vscode then
 
   vim.o.ignorecase = true
   vim.o.smartcase = true
-  vim.o.clipboard = 'unnamedplus'
   vim.o.updatetime = 250
   vim.g.mapleader = ' '
 
@@ -148,6 +147,24 @@ vim.o.showmode = false
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
+-- Pin an explicit provider so copy/paste doesn't depend on which clipboard tool
+-- Neovim happens to find first. This machine has both wl-clipboard and xclip;
+-- prefer wl-clipboard under Wayland, fall back to xclip under X11.
+if vim.env.WAYLAND_DISPLAY and vim.fn.executable 'wl-copy' == 1 then
+  vim.g.clipboard = {
+    name = 'wl-clipboard',
+    copy = { ['+'] = 'wl-copy', ['*'] = 'wl-copy --primary' },
+    paste = { ['+'] = 'wl-paste --no-newline', ['*'] = 'wl-paste --no-newline --primary' },
+    cache_enabled = true,
+  }
+elseif vim.env.DISPLAY and vim.fn.executable 'xclip' == 1 then
+  vim.g.clipboard = {
+    name = 'xclip',
+    copy = { ['+'] = 'xclip -selection clipboard', ['*'] = 'xclip -selection primary' },
+    paste = { ['+'] = 'xclip -selection clipboard -o', ['*'] = 'xclip -selection primary -o' },
+    cache_enabled = true,
+  }
+end
 vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
 -- Enable break indent
