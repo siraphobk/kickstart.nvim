@@ -150,7 +150,12 @@ vim.o.showmode = false
 -- Pin an explicit provider so copy/paste doesn't depend on which clipboard tool
 -- Neovim happens to find first. This machine has both wl-clipboard and xclip;
 -- prefer wl-clipboard under Wayland, fall back to xclip under X11.
-if vim.env.WAYLAND_DISPLAY and vim.fn.executable 'wl-copy' == 1 then
+-- Probe for the live Wayland socket rather than $WAYLAND_DISPLAY: that var isn't
+-- exported into tty / multiplexer (Zellij) sessions even when the compositor is
+-- running, and wl-clipboard defaults to the wayland-0 socket on its own anyway.
+local runtime = vim.env.XDG_RUNTIME_DIR or ('/run/user/' .. vim.uv.getuid())
+local wl_socket = runtime .. '/' .. (vim.env.WAYLAND_DISPLAY or 'wayland-0')
+if vim.fn.executable 'wl-copy' == 1 and vim.uv.fs_stat(wl_socket) then
   vim.g.clipboard = {
     name = 'wl-clipboard',
     copy = { ['+'] = 'wl-copy', ['*'] = 'wl-copy --primary' },
