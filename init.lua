@@ -722,6 +722,11 @@ require('lazy').setup({
         -- clangd = {},
         gopls = {},
         buf_ls = {},
+        astro = {
+          -- Volar-based; needs the workspace's TypeScript. Relative path resolves against the project root.
+          -- May need to install typescript in the project using `pnpm add -D typescript`
+          init_options = { typescript = { tsdk = 'node_modules/typescript/lib' } },
+        },
         -- pyright = {},
         rust_analyzer = {},
         --
@@ -772,7 +777,7 @@ require('lazy').setup({
       -- You can press `g?` for help in this menu.
       -- LSP server names (as used by nvim-lspconfig) that should NOT be passed to Mason,
       -- either because Mason doesn't have them or uses a different package name.
-      local mason_excluded = { 'buf_ls', 'rust_analyzer' }
+      local mason_excluded = { 'buf_ls', 'rust_analyzer', 'astro' }
       local ensure_installed = vim.tbl_filter(function(name) return not vim.tbl_contains(mason_excluded, name) end, vim.tbl_keys(servers or {}))
 
       vim.list_extend(ensure_installed, {
@@ -780,6 +785,7 @@ require('lazy').setup({
         'stylua', -- Used to format Lua code
         'buf',
         'rust-analyzer', -- Rust Language server (Mason name differs from lspconfig name)
+        'astro-language-server', -- Astro Language server (Mason name differs from lspconfig name)
         -- You can add other tools here that you want Mason to install
       })
 
