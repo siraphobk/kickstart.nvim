@@ -725,6 +725,12 @@ require('lazy').setup({
         astro = {
           -- Volar-based; needs the workspace's TypeScript. Relative path resolves against the project root.
           -- May need to install typescript in the project using `pnpm add -D typescript`
+          --
+          -- Format-on-save: the astro LSP does the formatting (conform falls back to it, no astro
+          -- entry in formatters_by_ft). But it has NO astro parser of its own -- it resolves
+          -- prettier-plugin-astro from the project's node_modules. So per astro project, run:
+          --   pnpm add -D prettier-plugin-astro
+          -- then restart nvim. Without it, nothing can format .astro (not the LSP, not prettierd).
           init_options = { typescript = { tsdk = 'node_modules/typescript/lib' } },
         },
         -- pyright = {},
