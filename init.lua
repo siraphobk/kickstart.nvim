@@ -253,6 +253,9 @@ vim.keymap.set('n', '<leader>qs', vim.diagnostic.setloclist, { desc = 'Open diag
 vim.keymap.set('n', '<leader>ql', vim.diagnostic.setqflist, { desc = 'Open diagnostic [Q]uickfix [L]ist' })
 vim.keymap.set('n', '<leader>qf', vim.diagnostic.open_float, { noremap = true, silent = true, desc = '[Q]uickfix [F]loat' })
 
+-- Toggle No-Neck-Pain centered layout
+vim.keymap.set('n', '<leader>nn', '<cmd>NoNeckPain<CR>', { desc = 'Toggle [N]o[N]eckPain' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -336,6 +339,17 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function() vim.hl.on_yank() end,
+})
+
+-- Soft-wrap prose at word boundaries for markdown files
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'Enable wrap and linebreak for markdown',
+  group = vim.api.nvim_create_augroup('markdown-wrap', { clear = true }),
+  pattern = 'markdown',
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+  end,
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
