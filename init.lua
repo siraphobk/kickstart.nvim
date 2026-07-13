@@ -1141,4 +1141,11 @@ vim.filetype.add {
   extension = {
     fga = 'fga',
   },
+  filename = {
+    ['Tiltfile'] = 'starlark',
+    ['.Tiltfile'] = 'starlark',
+  },
+  pattern = {
+    ['.*%.Tiltfile'] = 'starlark',
+  },
 }
