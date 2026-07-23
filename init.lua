@@ -567,7 +567,6 @@ do
       { '<leader>q', group = '[Q]uickfix', mode = { 'n' } },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
       { 'gr', group = 'LSP Actions', mode = { 'n' } },
-      { '<leader>o', group = '[O]cto', mode = { 'n', 'x' } },
       { '<leader>m', group = '[M]ulticursor', mode = { 'n', 'x' } },
     },
   }
