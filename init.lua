@@ -1000,8 +1000,9 @@ do
     format_on_save = function(bufnr)
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
-        -- lua = true,
         -- python = true,
+        rust = true,
+        lua = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -1014,7 +1015,7 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
-      -- rust = { 'rustfmt' },
+      rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
       --
