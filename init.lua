@@ -907,6 +907,10 @@ do
     },
     -- pyright = {},
     rust_analyzer = {},
+    -- NOTE: the lspconfig name is `denols`, not `deno` (the Mason package is `deno`).
+    -- Only attaches when a deno.json / deno.jsonc / deno.lock is nearer than any
+    -- node lockfile, so a Deno package inside a Node monorepo still works.
+    denols = {},
     --
     -- Some languages (like typescript) have entire language plugins that can be useful:
     --    https://github.com/pmizio/typescript-tools.nvim
@@ -970,13 +974,14 @@ do
   -- You can press `g?` for help in this menu.
   -- LSP server names (as used by nvim-lspconfig) that should NOT be passed to Mason,
   -- either because Mason doesn't have them or uses a different package name.
-  local mason_excluded = { 'buf_ls', 'rust_analyzer', 'astro' }
+  local mason_excluded = { 'buf_ls', 'rust_analyzer', 'astro', 'denols' }
   local ensure_installed = vim.tbl_filter(function(name) return not vim.tbl_contains(mason_excluded, name) end, vim.tbl_keys(servers or {}))
 
   vim.list_extend(ensure_installed, {
     'buf',
     'rust-analyzer', -- Rust Language server (Mason name differs from lspconfig name)
     'astro-language-server', -- Astro Language server (Mason name differs from lspconfig name)
+    'deno', -- Deno + its built-in LSP (Mason name differs from lspconfig name `denols`)
     -- You can add other tools here that you want Mason to install
   })
 
