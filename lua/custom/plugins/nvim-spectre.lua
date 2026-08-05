@@ -1,4 +1,10 @@
-vim.pack.add {
-  'https://github.com/nvim-pack/nvim-spectre',
-  'https://github.com/nvim-lua/plenary.nvim',
-}
+-- DISABLED: replaced by grug-far.nvim (see grug-far.nvim.lua).
+-- Uncomment to bring it back. plenary.nvim is already installed by telescope
+-- in init.lua, so only the spectre line matters here.
+--
+-- vim.pack.add {
+--   'https://github.com/nvim-pack/nvim-spectre',
+-- }
+--
+-- The plugin files stay on disk until you remove them:
+--   :lua vim.pack.del { 'nvim-spectre' }
