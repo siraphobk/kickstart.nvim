@@ -2,13 +2,14 @@ vim.pack.add { 'https://github.com/petertriho/nvim-scrollbar' }
 
 require('scrollbar').setup {
   handle = {
-    -- A blank cell painted with the highlight's background, so the handle is
-    -- only as visible as that background is.  `CursorColumn` (the default) is a
-    -- faint tint by design; `Visual` is defined with real contrast in every
-    -- colorscheme, which keeps this readable across all the themes in
-    -- `lua/custom/themes/`.
-    highlight = 'Visual',
-    blend = 0, -- 0 = fully opaque, 100 = invisible
+    -- The handle is a blank cell, so it reads purely as a background colour.
+    -- A fixed grey rather than one borrowed from the theme: every colorscheme in
+    -- `lua/custom/themes/` is dark, so one mid-grey sits right on all of them,
+    -- and the obvious groups to borrow from are not actually grey everywhere --
+    -- tokyonight's `Visual` is navy (#2d3f76).  Lower this hex for a quieter
+    -- handle, raise it for a brighter one.
+    color = '#404040',
+    blend = 0, -- 0 = solid, 100 = invisible
   },
   marks = {
     Cursor = { text = '▶' },
