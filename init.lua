@@ -325,6 +325,41 @@ do
     print('Yank path:range =', result)
   end, { desc = 'Yank path:range' })
 
+  -- Tabs ------------------------------------------------------------------------
+  --
+  -- Alt-based tab keys are deliberately avoided: zellij binds Alt h/j/k/l,
+  -- Alt i/o (MoveTab), Alt n/p/f and Alt [/] at the multiplexer level, so those
+  -- chords never reach Neovim. `<leader>T` is free and which-key documents it.
+  --
+  -- Built-in `gt` / `gT` still cycle tabs, and `{count}gt` jumps to tab N --
+  -- both are faster than a prefix when pressed repeatedly.
+
+  vim.keymap.set('n', '<leader>Tn', '<cmd>tabnew<CR>', { desc = '[T]ab: [N]ew' })
+  vim.keymap.set('n', '<leader>Tc', '<cmd>tabclose<CR>', { desc = '[T]ab: [C]lose' })
+  vim.keymap.set('n', '<leader>To', '<cmd>tabonly<CR>', { desc = '[T]ab: close all [O]thers' })
+
+  -- :tabnext / :tabprevious already wrap at the ends.
+  vim.keymap.set('n', '<leader>Tl', '<cmd>tabnext<CR>', { desc = '[T]ab: next (l)' })
+  vim.keymap.set('n', '<leader>Th', '<cmd>tabprevious<CR>', { desc = '[T]ab: previous (h)' })
+
+  -- :tabmove does NOT wrap -- it errors at either end -- so wrap by hand. Moving
+  -- the last tab right sends it to position 0, and the first tab left to the end.
+  ---@param direction 1|-1
+  local function move_tab(direction)
+    local total = vim.fn.tabpagenr '$'
+    if total < 2 then return end
+
+    local current = vim.fn.tabpagenr()
+    if direction > 0 then
+      vim.cmd(current == total and 'tabmove 0' or 'tabmove +1')
+    else
+      vim.cmd(current == 1 and 'tabmove $' or 'tabmove -1')
+    end
+  end
+
+  vim.keymap.set('n', '<leader>TL', function() move_tab(1) end, { desc = '[T]ab: move right (L)' })
+  vim.keymap.set('n', '<leader>TH', function() move_tab(-1) end, { desc = '[T]ab: move left (H)' })
+
   -- User Custom Commands --------------------------------------------------------
 
   -- Close other buffers
@@ -569,6 +604,8 @@ do
       { 'gr', group = 'LSP Actions', mode = { 'n' } },
       { '<leader>m', group = '[M]ulticursor', mode = { 'n', 'x' } },
       { '<leader>r', group = 'Find/[R]eplace (grug-far)', mode = { 'n', 'x' } },
+      { '<leader>d', group = '[D]iff (diffbandit)', mode = { 'n' } },
+      { '<leader>T', group = '[T]ab', mode = { 'n' } },
     },
   }
 
