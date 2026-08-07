@@ -573,22 +573,16 @@ do
   }
 
   -- [[ Colorscheme ]]
-  -- You can easily change to a different colorscheme.
-  -- Change the name of the colorscheme plugin below, and then
-  -- change the command under that to load whatever the name of that colorscheme is.
+  -- Every theme lives in `lua/custom/themes/` -- one file per theme, plus a
+  -- registry that installs them all and applies the default.
   --
-  -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  -- The active colorscheme lives in lua/custom/plugins/gruvbox-material.lua.
-  -- tokyonight is kept installed as an alternative (switch via `:Telescope colorscheme`).
-  vim.pack.add { gh 'folke/tokyonight.nvim' }
-  ---@diagnostic disable-next-line: missing-fields
-  require('tokyonight').setup {
-    styles = {
-      comments = { italic = true },
-      functions = { bold = true },
-    },
-    dim_inactive = true,
-  }
+  -- Switch at any time with `:colorscheme <Tab>` (or `:Telescope colorscheme`,
+  -- which also previews). That lasts for the session; to change what you start
+  -- in, edit `M.default` in `lua/custom/themes/init.lua`.
+  --
+  -- Loaded here, before the rest of the UI plugins, so those plugins see the
+  -- theme's highlight groups already defined when they set themselves up.
+  require 'custom.themes'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
