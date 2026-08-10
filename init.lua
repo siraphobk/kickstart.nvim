@@ -228,6 +228,12 @@ do
   -- See `:help 'confirm'`
   vim.o.confirm = true
 
+  -- Default border for any floating window that does not ask for its own.
+  -- LSP hover (`K`) is the one that matters: without this it draws no edge at
+  -- all and runs straight into the buffer text behind it.
+  -- See `:help 'winborder'`
+  vim.o.winborder = 'rounded'
+
   vim.opt.shiftwidth = 2
   vim.opt.tabstop = 2
   vim.opt.colorcolumn = '80'
@@ -269,6 +275,40 @@ do
       end,
     },
   }
+
+  -- Give floating windows a background of their own.
+  --
+  -- Most themes ship `NormalFloat` with the same background as `Normal`, so a
+  -- hover popup is the exact same colour as the code behind it and there is no
+  -- visual seam. Rather than hardcode a hex -- which would be wrong on three of
+  -- the four themes in `lua/custom/themes/` -- derive it from whatever `Normal`
+  -- currently is: nudge a dark background lighter, a light one darker.
+  --
+  -- Registered here, before `require 'custom.themes'` applies the startup
+  -- colorscheme, so it also fires on the first paint and not just on `:colorscheme`.
+  local FLOAT_BG_STEP = 18 -- how far to move each RGB channel, 0-255
+  local FLOAT_BORDER_FG = '#6a6a6a' -- fixed grey: readable on light and dark alike
+
+  local function shift_away_from(rgb, step)
+    local r, g, b = bit.rshift(rgb, 16) % 256, bit.rshift(rgb, 8) % 256, rgb % 256
+    local direction = (r + g + b) / 3 < 128 and step or -step
+    local function clamp(c) return math.min(255, math.max(0, c + direction)) end
+    return ('#%02x%02x%02x'):format(clamp(r), clamp(g), clamp(b))
+  end
+
+  vim.api.nvim_create_autocmd('ColorScheme', {
+    desc = 'Lift floating-window backgrounds off the buffer background',
+    callback = function()
+      local normal = vim.api.nvim_get_hl(0, { name = 'Normal', link = false })
+      -- Transparent themes have no `bg` to derive from; leave them alone.
+      if not normal.bg then return end
+
+      local float_bg = shift_away_from(normal.bg, FLOAT_BG_STEP)
+      vim.api.nvim_set_hl(0, 'NormalFloat', { fg = normal.fg, bg = float_bg })
+      vim.api.nvim_set_hl(0, 'FloatBorder', { fg = FLOAT_BORDER_FG, bg = float_bg })
+      vim.api.nvim_set_hl(0, 'FloatTitle', { fg = normal.fg, bg = float_bg, bold = true })
+    end,
+  })
 
   -- Diagnostic keymaps
   vim.keymap.set('n', '<leader>qs', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix [S]etloclist' })
