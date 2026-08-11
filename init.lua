@@ -646,6 +646,7 @@ do
       { '<leader>r', group = 'Find/[R]eplace (grug-far)', mode = { 'n', 'x' } },
       { '<leader>d', group = '[D]iff (diffbandit)', mode = { 'n' } },
       { '<leader>T', group = '[T]ab', mode = { 'n' } },
+      { '<leader>H', group = '[H]arpoon', mode = { 'n' } },
     },
   }
 
