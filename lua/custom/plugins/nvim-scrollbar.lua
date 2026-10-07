@@ -40,7 +40,7 @@ require('scrollbar').setup {
     'prompt',
     'TelescopePrompt',
     'neo-tree',
-    'aerial',
+    'Outline',
     'grug-far',
     'no-neck-pain',
     'toggleterm',

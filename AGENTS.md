@@ -75,7 +75,7 @@ There is no traditional build or test suite in this repo. Use the commands below
   scope, so they spell the URL out.
 - Keep custom plugins isolated in `lua/custom/plugins` to reduce merge conflicts. Every `*.lua`
   file there is auto-loaded by `lua/custom/plugins/init.lua`, which uses `dofile` rather than
-  `require` so filenames containing dots (e.g. `aerial.nvim.lua`) still work.
+  `require` so filenames containing dots (e.g. `outline.nvim.lua`) still work.
 - Do not edit `nvim-pack-lock.json` by hand; it is generated and gitignored.
 
 ### Themes
