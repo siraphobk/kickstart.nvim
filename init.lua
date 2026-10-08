@@ -993,12 +993,9 @@ do
     -- Only attaches when a deno.json / deno.jsonc / deno.lock is nearer than any
     -- node lockfile, so a Deno package inside a Node monorepo still works.
     denols = {},
-    --
-    -- Some languages (like typescript) have entire language plugins that can be useful:
-    --    https://github.com/pmizio/typescript-tools.nvim
-    --
-    -- But for many setups, the LSP (`ts_ls`) will work just fine
-    -- ts_ls = {},
+    ts_ls = {},
+    svelte = {},
+    graphql = {},
 
     stylua = {}, -- Used to format Lua code
 

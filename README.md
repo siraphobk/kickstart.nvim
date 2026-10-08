@@ -116,6 +116,26 @@ That's it! `vim.pack` will install all the plugins from your config. Use
 `:lua vim.pack.update()` to fetch updates (`:write` applies updates, `:quit`
 cancels them).
 
+#### Default web language servers
+
+Mason installs these servers automatically. Neovim enables them for their supported filetypes.
+
+| Language or framework | LSP configuration |
+| --- | --- |
+| TypeScript and JavaScript | `ts_ls` |
+| Svelte and SvelteKit | `svelte` |
+| GraphQL | `graphql` |
+| Astro | `astro` |
+
+Keep TypeScript installed in each Astro project with `pnpm add -D typescript`.
+The Astro configuration uses `node_modules/typescript/lib` from the project.
+
+GraphQL requires the project's `graphql` package and a GraphQL config that identifies its schema.
+Install the package with `pnpm add graphql` and create `graphql.config.yml` or `.graphqlrc`.
+The default GraphQL filetypes are `graphql`, `typescriptreact`, and `javascriptreact`.
+
+Restart Neovim after configuration changes. Use `:Mason` to inspect installation status and `:checkhealth vim.lsp` to inspect active servers.
+
 #### Clipboard over SSH and Zellij
 
 Neovim uses OSC 52 in SSH and Zellij sessions to copy text through the terminal.
