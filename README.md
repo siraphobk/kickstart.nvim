@@ -116,6 +116,27 @@ That's it! `vim.pack` will install all the plugins from your config. Use
 `:lua vim.pack.update()` to fetch updates (`:write` applies updates, `:quit`
 cancels them).
 
+#### Clipboard over SSH and Zellij
+
+Neovim uses OSC 52 in SSH and Zellij sessions to copy text through the terminal.
+Your local terminal must support OSC 52 and permit clipboard writes.
+Ordinary yanks use the clipboard.
+Outside SSH and Zellij, Neovim retains the Wayland or X11 clipboard provider.
+
+Neovim caches copied text so `p` can restore the last yank without a clipboard read.
+Use your local terminal's paste shortcut to insert text copied from another application.
+Zellij blocks OSC 52 clipboard reads by default. Keep that security setting unchanged.
+
+On the remote machine, leave `copy_command` unset in `~/.config/zellij/config.kdl`.
+Use `copy_clipboard "system"` and `copy_on_select true` for Zellij selections.
+Restart Neovim after a configuration change. Zellij reloads its configuration automatically.
+
+Run the clipboard regression checks from this repository:
+
+```sh
+ZELLIJ=0 nvim --headless -u init.lua -l tests/clipboard.lua
+```
+
 #### Read The Friendly Documentation
 
 Read through the `init.lua` file in your configuration folder for more

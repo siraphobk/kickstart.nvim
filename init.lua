@@ -155,15 +155,24 @@ do
   --  Schedule the setting after `UiEnter` because it can increase startup-time.
   --  Remove this option if you want your OS clipboard to remain independent.
   --  See `:help 'clipboard'`
-  -- Pin an explicit provider so copy/paste doesn't depend on which clipboard tool
-  -- Neovim happens to find first. This machine has both wl-clipboard and xclip;
-  -- prefer wl-clipboard under Wayland, fall back to xclip under X11.
-  -- Probe for the live Wayland socket rather than $WAYLAND_DISPLAY: that var isn't
-  -- exported into tty / multiplexer (Zellij) sessions even when the compositor is
-  -- running, and wl-clipboard defaults to the wayland-0 socket on its own anyway.
+  -- Zellij sessions can retain a local environment when a client attaches over SSH.
+  -- Cache yanks because Zellij blocks OSC 52 clipboard reads by default.
   local runtime = vim.env.XDG_RUNTIME_DIR or ('/run/user/' .. vim.uv.getuid())
   local wl_socket = runtime .. '/' .. (vim.env.WAYLAND_DISPLAY or 'wayland-0')
-  if vim.fn.executable 'wl-copy' == 1 and vim.uv.fs_stat(wl_socket) then
+  if vim.env.SSH_CONNECTION or vim.env.SSH_TTY or vim.env.ZELLIJ then
+    local osc52_copy = require('vim.ui.clipboard.osc52').copy '+'
+    local copied = { {}, 'v' }
+    local function copy(lines, regtype)
+      copied = { lines, regtype }
+      osc52_copy(lines)
+    end
+    local function paste() return copied end
+    vim.g.clipboard = {
+      name = 'OSC 52',
+      copy = { ['+'] = copy, ['*'] = copy },
+      paste = { ['+'] = paste, ['*'] = paste },
+    }
+  elseif vim.fn.executable 'wl-copy' == 1 and vim.uv.fs_stat(wl_socket) then
     vim.g.clipboard = {
       name = 'wl-clipboard',
       copy = { ['+'] = 'wl-copy', ['*'] = 'wl-copy --primary' },
