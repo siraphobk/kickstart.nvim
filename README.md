@@ -116,6 +116,11 @@ That's it! `vim.pack` will install all the plugins from your config. Use
 `:lua vim.pack.update()` to fetch updates (`:write` applies updates, `:quit`
 cancels them).
 
+#### Diffview
+
+Use `:DiffviewOpen` to review Git changes and `:DiffviewClose` to close the view.
+Use `:DiffviewFileHistory %` to review the current file's history.
+
 #### Default web language servers
 
 Mason installs these servers automatically. Neovim enables them for their supported filetypes.
