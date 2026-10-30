@@ -573,7 +573,7 @@ do
       vim.notify(('PackReinstall: no installed plugin named %q'):format(name), vim.log.levels.ERROR)
       return
     end
-    vim.pack.del { name }
+    vim.pack.del({ name }, { force = true })
     vim.pack.add { spec }
     vim.notify(('Reinstalled %s. Restart nvim if it misbehaves.'):format(name), vim.log.levels.INFO)
   end, { nargs = 1, complete = complete_pack_names, desc = 'Delete and re-clone a plugin' })
@@ -588,7 +588,7 @@ do
       return
     end
     if vim.fn.confirm(('Delete all %d plugins from disk?'):format(#names), '&Yes\n&No', 2) ~= 1 then return end
-    vim.pack.del(names)
+    vim.pack.del(names, { force = true })
     vim.notify(('Deleted %d plugins. Restart nvim to reinstall everything.'):format(#names), vim.log.levels.WARN)
   end, { desc = 'Delete all plugins from disk; restart nvim to reinstall' })
 end
